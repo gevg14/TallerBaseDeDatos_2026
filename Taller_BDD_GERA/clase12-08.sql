@@ -2,6 +2,7 @@
 
 SELECT * FROM CLIENTE;
 SELECT * FROM TRANSACCION_PAGO;
+SELECT * FROM RESERVA_TEMPORAL;
 
 --NOMBRE
 SELECT NOMBRE FROM CLIENTE;
@@ -17,10 +18,14 @@ SELECT ESTADO FROM TRANSACCION_PAGO;
 
 SELECT 
     c.nombre as Nombre_Del_Cliente,
-    tp.monto_bruto,
-    tp.descuento,
-    tp.monto_final,
-    tp.estado AS estado_pago
+    rt.ESTADO as Estado_De_Le_Reserva,
+    tp.estado AS Estado_Pago,
+    tp.monto_bruto AS Monto_Bruto,
+    tp.descuento as Descuento,
+    tp.monto_final as Monto_Final
+    
 
 FROM CLIENTE c
-Inner Join TRANSACCION_PAGO tp on tp.TRANSACCION_ID = c.CLIENTE_ID;
+INNER JOIN RESERVA_TEMPORAL rt on rt.CLIENTE_ID = c.CLIENTE_ID
+Inner Join TRANSACCION_PAGO tp on tp.RESERVA_ID = rt.RESERVA_ID
+WHERE c.CLIENTE_ID = 1;
