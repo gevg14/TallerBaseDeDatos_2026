@@ -33,7 +33,7 @@ WHERE c.CLIENTE_ID = 1;
 
 DECLARE
     TYPE boleta_Cliente IS RECORD(
-        NOMBRE_CLIENTE CLIENTE.NOMBRE%TYPE,
+        nombre_cliente CLIENTE.NOMBRE%TYPE,
         estado_reserva RESERVA_TEMPORAL.estado%TYPE,
         estado_pago TRANSACCION_PAGO.ESTADO%TYPE,
         monto_bruto TRANSACCION_PAGO.MONTO_BRUTO%TYPE,
@@ -44,27 +44,30 @@ DECLARE
     v_boleta boleta_Cliente;
 BEGIN
     SELECT 
-    c.nombre as Nombre_Del_Cliente,
-    rt.ESTADO as Estado_De_Le_Reserva,
-    tp.estado AS Estado_Pago,
-    tp.monto_bruto AS Monto_Bruto,
-    tp.descuento as Descuento,
-    tp.monto_final as Monto_Final
-    INTO v_boleta.nombre, v_boleta.estado_reserva,v_boleta.estado_pago,v_boleta.monto_bruto,v_boleta.descuento_monto,v_boleta.monto_final
+        c.nombre,
+        rt.ESTADO,
+        tp.estado,
+        tp.monto_bruto,
+        tp.descuento,
+        tp.monto_final
+    INTO 
+        v_boleta.nombre_cliente, 
+        v_boleta.estado_reserva, 
+        v_boleta.estado_pago, 
+        v_boleta.monto_bruto, 
+        v_boleta.descuento_monto, 
+        v_boleta.monto_final
     FROM CLIENTE c
-    INNER JOIN RESERVA_TEMPORAL rt on rt.CLIENTE_ID = c.CLIENTE_ID
-    Inner Join TRANSACCION_PAGO tp on tp.RESERVA_ID = rt.RESERVA_ID
+    INNER JOIN RESERVA_TEMPORAL rt ON rt.CLIENTE_ID = c.CLIENTE_ID
+    INNER JOIN TRANSACCION_PAGO tp ON tp.RESERVA_ID = rt.RESERVA_ID
     WHERE c.CLIENTE_ID = 1;
-
 
     DBMS_OUTPUT.PUT_LINE('******** PUNTO TICKET DUOC ********');
     DBMS_OUTPUT.PUT_LINE('***********************************');
-    DBMS_OUTPUT.PUT_LINE('|| Nombre Del cliente: ' || v_boleta.NOMBRE_CLIENTE ||'||');
-    DBMS_OUTPUT.PUT_LINE('|| ESTADO RESERVA: ' || v_boleta.estado_reserva ||'||');
-    DBMS_OUTPUT.PUT_LINE('|| ESTADO DE PAGO: ' || v_boleta.Estado_Pago ||'||');
-    DBMS_OUTPUT.PUT_LINE('|| Monto Bruto: ' || v_boleta.monto_bruto ||'||');
-    DBMS_OUTPUT.PUT_LINE('|| Descuento: ' || v_boleta.descuento ||'||');
-    DBMS_OUTPUT.PUT_LINE('|| Monto final: ' || v_boleta.monto_final ||'||');
-    NULL;
-
+    DBMS_OUTPUT.PUT_LINE('|| Nombre Del cliente: ' || v_boleta.nombre_cliente || '||');
+    DBMS_OUTPUT.PUT_LINE('|| ESTADO RESERVA: '     || v_boleta.estado_reserva     || '||');
+    DBMS_OUTPUT.PUT_LINE('|| ESTADO DE PAGO: '     || v_boleta.estado_pago        || '||');
+    DBMS_OUTPUT.PUT_LINE('|| Monto Bruto: '        || v_boleta.monto_bruto        || '||');
+    DBMS_OUTPUT.PUT_LINE('|| Descuento: '          || v_boleta.descuento_monto    || '||');
+    DBMS_OUTPUT.PUT_LINE('|| Monto final: '        || v_boleta.monto_final        || '||');
 END;
