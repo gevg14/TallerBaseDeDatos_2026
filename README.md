@@ -30,8 +30,10 @@ git add .
 ```bash
 git commit -m "Primer commit"
 ```
-
-
+## final push
+```bash
+git push origin main
+```
 
 
 
