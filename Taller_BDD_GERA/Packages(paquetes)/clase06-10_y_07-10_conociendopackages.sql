@@ -50,3 +50,27 @@ END pkg_boleteria;
 
 SELECT STOCK_DISPONIBLE FROM LOCALIDAD_EVENTO WHERE LOCALIDAD_EVENTO_ID = 1;
 
+
+--SEGUNDA PARTE 07/10/2026
+
+DECLARE
+
+    v_stock NUMBER;
+
+begin
+
+    v_stock := PKG_BOLETERIA.FN_VERIFICAR_STOCK(1);
+
+    dbms_output.put_line(PKG_BOLETERIA.FN_VERIFICAR_STOCK(1));
+
+    v_stock := PKG_BOLETERIA.FN_VERIFICAR_STOCK(1);
+
+    dbms_output.put_line(PKG_BOLETERIA.FN_VERIFICAR_STOCK(1));
+
+    PKG_BOLETERIA.SP_VENTA_ENTRADA(1,3);
+
+    DBMS_OUTPUT.PUT_LINE('El total de entradas vendidas es: '||PKG_BOLETERIA.g_cantidad_entradas_vendidas);
+
+END;
+
+/
